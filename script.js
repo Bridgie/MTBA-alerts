@@ -27,7 +27,7 @@ angular.module('MBTA', [])
             $scope.redProblem = false;              //if red has a problem will display header text
 
             for(i = 0; i < $scope.redData.alerts.length; i++){
-                if($scope.redData.alerts[i].severity === "Minor" || $scope.redData.alerts[i].severity === "Severe"){
+                if($scope.redData.alerts[i].severity === "Moderate" || $scope.redData.alerts[i].severity === "Severe"){
                     $scope.redEvents.push($scope.redData.alerts[i].short_header_text)
                     $scope.redProblem = true;
 
