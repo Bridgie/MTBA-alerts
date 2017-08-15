@@ -12,3 +12,21 @@ button {
      border-bottom:1px solid #444; 
      cursor: pointer;
 }
+hr{
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+ul{
+    padding: 0;
+}
+button.selected{
+  border: 1px solid #444;
+}
+.green{
+    color: green;
+}
+.delay{
+    color: red;
+}

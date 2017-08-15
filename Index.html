@@ -19,16 +19,31 @@
 
     <div class="navbar navbar-default">
      <ul class="nav navbar-nav">
-        <a href="/" class="navbar-brand"><i class="ion-android-train"></i> MBTA</a>
-         <li><button ng-click="redSelected = true">Red</button></li>
-         <li><button ng-click="redSelected = false; orangeSelected = true">Orange</button></li>
+        <a href="/"><img class="navbar-brand" src="https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/0018/2210/brand.gif?itok=jU5_VD4L"/></a>
+         <li><button ng-click="selectRed()">Red</button></li>
+         <li><button ng-click="selectOrange()">Orange</button></li>
+         <li><button ng-click="selectBlue()">Blue</button></li>
       </ul>
     </div> <!--End navbar-->
 
                 <!--Start trains-->
+                <!--Red-->
                 <ul ng-show="redSelected">
-                    <p ng-repeat="event in redEvents" ng-show="redProblem">{{event}}</p>
-                    <p ng-hide="redProblem">No Severe Delays Expected</p>
+                    <p ng-repeat-start="event in redEvents" ng-show="redProblem" class="delay">{{event}}</p>
+                    <hr ng-repeat-end />
+                    <p ng-hide="redProblem" class="green">No Severe Delays</p>
+                </ul>
+                <!--Orange-->
+                <ul ng-show="orangeSelected">
+                    <p ng-repeat-start="event in orangeEvents" ng-show="orangeProblem" class="delay">{{event}}</p>
+                    <hr ng-repeat-end />
+                    <p ng-hide="orangeProblem" class="green">No Severe Delays</p>
+                </ul>
+                <!--Blue-->
+                <ul ng-show="blueSelected">
+                    <p ng-repeat-start="event in blueEvents" ng-show="blueProblem" class="delay">{{event}}</p>
+                    <hr ng-repeat-end />
+                    <p ng-hide="blueProblem" class="green">No Severe Delays</p>
                 </ul>
 
                 <!--End Trains-->
@@ -37,9 +52,14 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
 
 
-<!--{{greeting.alert_headers[0]}}-->
+
+<!--     <li><button ng-click="redSelected = true; orangeSelected = false; blueSelected = false">Red</button></li>
+         <li><button ng-click="redSelected = false; orangeSelected = true; blueSelected = false">Orange</button></li>
+         <li><button ng-click="redSelected = false; orangeSelected = false; blueSelected = true">Blue</button></li>
+        -->
