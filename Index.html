@@ -7,59 +7,174 @@
   <title>MBTA</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/paper/bootstrap.min.css">
   <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <link rel="stylesheet" href="style.css">
-
+<style>
+.col-lg-4{
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+}
+.trainButton {
+     background:none!important;
+     color:inherit;
+     border:none;
+     margin-top: 20px !important;
+     padding:15 !important;
+     font: inherit;
+     
+     border-bottom:1px solid #444; 
+     cursor: pointer;
+}
+.trainHr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+.trainUl {
+    padding: 0;
+}
+button.selected {
+  border: 1px solid #444;
+}
+.green {
+    color: green;
+}
+.delay {
+    color: red;
+}
+.container {
+    padding-bottom: 10px;
+}
+.navbar-nav {
+ min-height: 70;
+}
+.navbar-brand {
+    height: 80px;
+    width: auto;
+}
+.silver{
+    color: grey;
+}
+</style>
 </head>
 <body ng-controller="MBTAapi">
-
-
     <div class="container text-center">
         <div class="row">
-            <div class="col-lg-3">
-
+            <div class="col-lg-4">
     <div class="navbar navbar-default">
      <ul class="nav navbar-nav">
-        <a href="/"><img class="navbar-brand" src="https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/0018/2210/brand.gif?itok=jU5_VD4L"/></a>
-         <li><button ng-click="selectRed()">Red</button></li>
-         <li><button ng-click="selectOrange()">Orange</button></li>
-         <li><button ng-click="selectBlue()">Blue</button></li>
+        <a href=""><img class="navbar-brand" src="https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/0018/2210/brand.gif?itok=jU5_VD4L"/></a>
+         <li style="color: red;"><button ng-click="selectRed()" class="trainButton"><strong>Red</strong></button></li>
+         <li style="color: orange;"><button ng-click="selectOrange()" class="trainButton"><strong>Orange</strong></button></li>
+         <li style="color: blue;"><button ng-click="selectBlue()" class="trainButton"><strong>Blue</strong></button></li>
+         <li><button ng-click="selectGrSv()" class="trainButton"><strong class="green">Green</strong><strong style="color: black;"> &amp; </strong><strong class="silver">Silver</strong></button></li>
       </ul>
-    </div> <!--End navbar-->
-
-                <!--Start trains-->
-                <!--Red-->
-                <ul ng-show="redSelected">
-                    <p ng-repeat-start="event in redEvents" ng-show="redProblem" class="delay">{{event}}</p>
-                    <hr ng-repeat-end />
-                    <p ng-hide="redProblem" class="green">No Severe Delays</p>
-                </ul>
-                <!--Orange-->
-                <ul ng-show="orangeSelected">
-                    <p ng-repeat-start="event in orangeEvents" ng-show="orangeProblem" class="delay">{{event}}</p>
-                    <hr ng-repeat-end />
-                    <p ng-hide="orangeProblem" class="green">No Severe Delays</p>
-                </ul>
-                <!--Blue-->
-                <ul ng-show="blueSelected">
-                    <p ng-repeat-start="event in blueEvents" ng-show="blueProblem" class="delay">{{event}}</p>
-                    <hr ng-repeat-end />
-                    <p ng-hide="blueProblem" class="green">No Severe Delays</p>
-                </ul>
-
-                <!--End Trains-->
-            </div> <!--end column-->
-        </div>
     </div>
 
+                  
+                <ul class="trainUl" ng-show="redSelected">
+                    <p ng-repeat-start="event in redEvents" ng-show="redProblem" class="delay">{{event}}</p>
+                    <hr class="trainHr" ng-repeat-end />
+                    <p ng-hide="redProblem" class="green">No Severe Delays</p>
+                </ul>
+                <ul class="trainUl" ng-show="orangeSelected">
+                    <p ng-repeat-start="event in orangeEvents" ng-show="orangeProblem" class="delay">{{event}}</p>
+                    <hr class="trainHr" ng-repeat-end />
+                    <p ng-hide="orangeProblem" class="green">No Severe Delays</p>
+                </ul>
+                <ul class="trainUl" ng-show="blueSelected">
+                    <p ng-repeat-start="event in blueEvents" ng-show="blueProblem" class="delay">{{event}}</p>
+                    <hr class="trainHr" ng-repeat-end />
+                    <p ng-hide="blueProblem" class="green">No Severe Delays</p>
+                </ul>
+                <ul class="trainUl" ng-show="GrSvSelected">
+                    <a href="https://t.mbta.com/alerts/subway#subway-tab" target="_blank">Click Here for Alerts regarding <strong class="green">Green</strong> &amp; <strong class="silver">Silver</strong></a>
+                </ul>
+            </div> 
+        </div>
+    </div>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+angular.module('MBTA', [])
+.controller('MBTAapi', function($scope, $http) {
+  $scope.selectRed =  function (){
+        $scope.redSelected = true;
+        $scope.blueSelected = false;
+        $scope.orangeSelected = false;
+        $scope.GrSvSelected = false;
+    }
+   $scope.selectBlue =  function (){
+        $scope.redSelected = false;
+        $scope.blueSelected = true;
+        $scope.orangeSelected = false;
+        $scope.GrSvSelected = false;
+    }
+    $scope.selectOrange = function (){
+        $scope.redSelected = false;
+        $scope.blueSelected = false;
+        $scope.GrSvSelected = false;
+        $scope.orangeSelected = true;
+        
+    }
+    $scope.selectGrSv = function(){
+        $scope.GrSvSelected = true;
+        $scope.redSelected = false;
+        $scope.blueSelected = false;
+        $scope.orangeSelected = false;
+    }
+    $http.get('http://realtime.mbta.com/developer/api/v2/alertsbyroute?api_key=vpb_N_4p1USeTZWdSfRIDQ&route=red&include_access_alerts=true&include_service_alerts=true&format=json').
+    then(function(response) {
+        $scope.redData = response.data;  
+        $scope.redSelected = true;
+        $scope.redProblem = false;
+        $scope.redEvents = [];
+        for(var i = 0; i < $scope.redData.alerts.length; i++){
+            if($scope.redData.alerts[i].effect_name === "Shuttle" || $scope.redData.alerts[i].effect_name === "Delay"){
+                $scope.redEvents.push($scope.redData.alerts[i].short_header_text);
+                $scope.redProblem = true;
+            }else{
+                $scope.redProblem = false;
+            }
+        }
+    });
+        $http.get('http://realtime.mbta.com/developer/api/v2/alertsbyroute?api_key=vpb_N_4p1USeTZWdSfRIDQ&route=orange&include_access_alerts=true&include_service_alerts=true&format=json').
+        then(function(response) {
+            $scope.orangeData = response.data;  
+            $scope.orangeSelected = false;
+            $scope.orangeProblem = false;
+            $scope.orangeEvents = [];
+            for(var i = 0; i < $scope.orangeData.alerts.length; i++){
+                if($scope.orangeData.alerts[i].effect_name === "Shuttle" || $scope.orangeData.alerts[i].effect_name === "Delay"){
+                    $scope.orangeEvents.push($scope.orangeData.alerts[i].short_header_text);
+                    $scope.orangeProblem = true;
+                }else{
+                    $scope.orangeProblem = false;
+                }
+            }
+        });
+            
+        $http.get('http://realtime.mbta.com/developer/api/v2/alertsbyroute?api_key=vpb_N_4p1USeTZWdSfRIDQ&route=blue&include_access_alerts=true&include_service_alerts=true&format=json').
+        then(function(response) {
+            $scope.blueData = response.data;  
+            $scope.blueSelected = false;
+            $scope.blueProblem = false;
+            $scope.blueEvents = [];
+            for(var i = 0; i < $scope.blueData.alerts.length; i++){
+                if($scope.blueData.alerts[i].effect_name === "Shuttle" || $scope.blueData.alerts[i].effect_name === "Delay"){
+                    $scope.blueEvents.push($scope.blueData.alerts[i].short_header_text);
+                    $scope.blueProblem = true;
+                }else{
+                    $scope.blueProblem = false;
+                }
+            }
+        });
+});
+    jQuery(function($){
+    $('.trainButton').on('click', function(){
+    $('.trainButton').removeClass('selected');
+    $(this).addClass('selected');
+});
+    });
+</script>
 </body>
 </html>
-
-
-
-<!--     <li><button ng-click="redSelected = true; orangeSelected = false; blueSelected = false">Red</button></li>
-         <li><button ng-click="redSelected = false; orangeSelected = true; blueSelected = false">Orange</button></li>
-         <li><button ng-click="redSelected = false; orangeSelected = false; blueSelected = true">Blue</button></li>
-        -->
