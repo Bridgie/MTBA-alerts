@@ -9,3 +9,6 @@ Currently the application is set to only display moderate or severe alerts howev
 
 This was made as a widget for a single page therefore does not utilize AngularJS ng-view
 
+## License
+
+Ths application is under MIT License, please see License.md
